@@ -8,6 +8,9 @@ on:
 
 jobs:
     build:
+        permissions:
+            contents: write
+
         runs-on: ${{matrix.os}}
         strategy:
             matrix:
@@ -28,5 +31,5 @@ jobs:
               with:
                   make_latest: true
                   name: Release ${{ github.ref_name }}
-                  tag_name: rel-${{github.sha}}
+                  tag_name: ${{github.sha}}
                   files: build
