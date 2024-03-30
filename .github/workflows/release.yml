@@ -8,13 +8,14 @@ on:
 
 jobs:
     build:
+        name: "Release: ${{matrix.os}}"
         permissions:
             contents: write
 
         runs-on: ${{matrix.os}}
         strategy:
             matrix:
-                os: [ubuntu-latest, windows]
+                os: [ubuntu-latest, windows-latest]
 
         steps:
             - uses: actions/checkout@v4
@@ -26,10 +27,16 @@ jobs:
               run: dotnet restore
             - name: Build
               run: dotnet build --no-restore
+
+            - name: zip/compress the build folder
+              shell: pwsh
+              run: powershell ./zip-build.ps1
+
             - name: Release
               uses: softprops/action-gh-release@v2
               with:
                   make_latest: true
                   name: Release ${{ github.ref_name }}
                   tag_name: sha-${{github.sha}}
-                  files: build
+                  files: |
+                      build.zip
