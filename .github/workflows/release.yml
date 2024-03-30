@@ -31,5 +31,5 @@ jobs:
               with:
                   make_latest: true
                   name: Release ${{ github.ref_name }}
-                  tag_name: ${{github.sha}}
+                  tag_name: sha-${{github.sha}}
                   files: build
