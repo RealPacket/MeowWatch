@@ -6,6 +6,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Platforms>AnyCPU;x64;x86</Platforms>
+    <BaseOutputPath>build</BaseOutputPath>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include=".github\workflows\release.yml" />
+  </ItemGroup>
 
 </Project>

@@ -2,9 +2,10 @@ root = true
 end_of_line = lf
 
 [*.{yml,yaml}]
+# Can't use tabs in YAML...
 indent_style = space
 indent_size = 4
 
-[*.{yml,yaml}]
+[!*.{yml,yaml}]
 indent_style = tab
 indent_size = 4
