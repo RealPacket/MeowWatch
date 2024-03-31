@@ -8,14 +8,18 @@ on:
 
 jobs:
     build:
-        name: "Release: ${{matrix.os}}"
+        name: "Release for ${{matrix.data.displayName}}"
         permissions:
             contents: write
 
-        runs-on: ${{matrix.os}}
+        runs-on: ${{matrix.data.os}}
         strategy:
             matrix:
-                os: [ubuntu-latest, windows-latest]
+                data:
+                    [
+                        { os: ubuntu-latest, displayName: "Linux" },
+                        { os: windows-latest, displayName: "Windows" },
+                    ]
 
         steps:
             - uses: actions/checkout@v4
@@ -39,4 +43,4 @@ jobs:
                   name: Release ${{ github.ref_name }}
                   tag_name: sha-${{github.sha}}
                   files: |
-                      build.zip
+                      build-${{matrix.data.displayName}}.zip
