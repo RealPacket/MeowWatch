@@ -1,7 +1,9 @@
+param (
+    [string]$InputFolder = "build",
+    [string]$ZipFileName = "build.zip"
+)
 $InputFolder = "build"
 
-$InputFolderName = Split-Path -Path $InputFolder -Leaf
-$ZipFileName = $InputFolderName + ".zip"
 $ZipFilePath = $ZipFileName
 $ZIP_BYTES = (80, 75, 05, 06, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 00, 001)
 
