@@ -30,7 +30,7 @@ jobs:
 
             - name: zip/compress the build folder
               shell: pwsh
-              run: powershell ./zip-build.ps1
+              run: ./zip-build.ps1
 
             - name: Release
               uses: softprops/action-gh-release@v2
