@@ -34,16 +34,18 @@ while (true)
 	var rl_rem = response.Headers.GetValues("ratelimit-remaining").FirstOrDefault();
 	var json = await response.Content.ReadFromJsonAsync<JsonElement>();
 	#region variables
-	var catPresent = json.GetProperty("catPresent").GetBoolean();
 	var name = json.GetProperty("name").GetString();
 	var englishName = "???";
 	if (json.TryGetProperty("englishName", out var englishNameProperty))
 	{
 		englishName = englishNameProperty.GetString();
 	}
+	var subscribeCount = json.GetProperty("subscribeCount").GetInt32();
 	var todayFeedCount = json.GetProperty("todayFeedCount").GetInt32();
 	var todayShowCount = json.GetProperty("todayShowCount").GetInt32();
-	var tempC = json.GetProperty("deviceTemperatureCelsius").GetInt32();
+    var catPresent = json.GetProperty("catPresent").GetBoolean();
+	var lightsOn = json.GetProperty("lightTurnedOn").GetBoolean();
+    var tempC = json.GetProperty("deviceTemperatureCelsius").GetInt32();
 	var stockObj = json.GetProperty("stock");
 	var kibblePercent = stockObj.GetProperty("kibble").GetString();
 	var hasSnacks = json.GetProperty("hasSnacks").GetBoolean();
@@ -57,9 +59,12 @@ while (true)
 	Console.WriteLine(new string('█', Console.WindowWidth));
 	#region stuff
 	Console.WriteLine($"Feeder name: {englishName} ({name})");
-	Console.WriteLine($"Feed count for today: {todayFeedCount}");
+    Console.WriteLine($"Subscribe count: {subscribeCount}");
+    Console.WriteLine($"Feed count for today: {todayFeedCount}");
 	Console.WriteLine($"Visit count for today: {todayShowCount}");
-	Console.WriteLine($"Views:");
+    Console.WriteLine($"Cat present?: {catPresent}");
+    Console.WriteLine($"Lights on?: {lightsOn}");
+    Console.WriteLine($"Views:");
 	Console.WriteLine($"    {appViewers} (JieMao)");
 	Console.WriteLine($"    {localViewers} (meow.camera)");
 	Console.WriteLine($"{totalViewers} (total viewers)");
@@ -67,10 +72,10 @@ while (true)
 	Console.WriteLine("Stock(%):");
 	Console.WriteLine($"Kibble/Food: {kibblePercent}");
 	Console.WriteLine($"Snacks: {snackPercent}");
-	Console.WriteLine($"Cat present?: {catPresent}");
 	#endregion
 	Console.WriteLine(new string('█', Console.WindowWidth));
-	if (!double.TryParse(reset, out var wait))
+    #region Rate Limit garbage
+    if (!double.TryParse(reset, out var wait))
 	{
 		Console.Error.WriteLine(
 			$"Failed to parse ratelimit-reset header. Content: {reset}"
@@ -88,4 +93,5 @@ while (true)
 		Console.WriteLine($"Waiting for {span} to avoid rate limits");
 		await Task.Delay(span);
 	}
+	#endregion
 }
