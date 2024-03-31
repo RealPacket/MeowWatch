@@ -59,19 +59,20 @@ while (true)
 	Console.WriteLine(new string('█', Console.WindowWidth));
 	#region stuff
 	Console.WriteLine($"Feeder name: {englishName} ({name})");
-    Console.WriteLine($"Subscribe count: {subscribeCount}");
-    Console.WriteLine($"Feed count for today: {todayFeedCount}");
-	Console.WriteLine($"Visit count for today: {todayShowCount}");
     Console.WriteLine($"Cat present?: {catPresent}");
     Console.WriteLine($"Lights on?: {lightsOn}");
+    Console.WriteLine($"Subscribe count: {subscribeCount}");
+    Console.WriteLine("Stock(%):");
+    Console.WriteLine($"Kibble/Food: {kibblePercent}");
+    Console.WriteLine($"Snacks: {snackPercent}");
+    Console.WriteLine("Stats for today:");
+    Console.WriteLine($"	 Feed count: {todayFeedCount}");
+	Console.WriteLine($"	Visit count: {todayShowCount}");
     Console.WriteLine($"Views:");
 	Console.WriteLine($"    {appViewers} (JieMao)");
 	Console.WriteLine($"    {localViewers} (meow.camera)");
 	Console.WriteLine($"{totalViewers} (total viewers)");
 	Console.WriteLine($"Temperature: {tempC}°C");
-	Console.WriteLine("Stock(%):");
-	Console.WriteLine($"Kibble/Food: {kibblePercent}");
-	Console.WriteLine($"Snacks: {snackPercent}");
 	#endregion
 	Console.WriteLine(new string('█', Console.WindowWidth));
     #region Rate Limit garbage
