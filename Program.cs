@@ -61,7 +61,7 @@ while (true)
 	Console.WriteLine($"Feeder name: {englishName} ({name})");
     Console.WriteLine($"Cat present?: {catPresent}");
     Console.WriteLine($"Lights on?: {lightsOn}");
-    Console.WriteLine($"Subscribe count: {subscribeCount}");
+    Console.WriteLine($"Subscriptions: {subscribeCount}");
     Console.WriteLine("Stock(%):");
     Console.WriteLine($"Kibble/Food: {kibblePercent}");
     Console.WriteLine($"Snacks: {snackPercent}");
