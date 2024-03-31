@@ -17,6 +17,12 @@ var feederId = Console.ReadLine();
 while (true)
 {
 	var response = await client.GetAsync($"/catHouse/{feederId}");
+	if (response.StatusCode == HttpStatusCode.NotFound)
+	{
+		Console.WriteLine("Not a valid feeder, exiting in 4 seconds...");
+		await Task.Delay(TimeSpan.FromSeconds(4));
+		break;
+	}
 	if (response.StatusCode == HttpStatusCode.TooManyRequests)
 	{
 		var delay = response.Headers.RetryAfter?.Delta ?? TimeSpan.FromSeconds(13);
@@ -30,7 +36,11 @@ while (true)
 	#region variables
 	var catPresent = json.GetProperty("catPresent").GetBoolean();
 	var name = json.GetProperty("name").GetString();
-	var englishName = json.GetProperty("englishName").GetString();
+	var englishName = "???";
+	if (json.TryGetProperty("englishName", out var englishNameProperty))
+	{
+		englishName = englishNameProperty.GetString();
+	}
 	var todayFeedCount = json.GetProperty("todayFeedCount").GetInt32();
 	var todayShowCount = json.GetProperty("todayShowCount").GetInt32();
 	var tempC = json.GetProperty("deviceTemperatureCelsius").GetInt32();
