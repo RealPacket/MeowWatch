@@ -42,9 +42,9 @@ while (true)
 	#region variables
 	var name = json.GetProperty("name").GetString();
 	var englishName = "???";
-	if (json.TryGetProperty("englishName", out var englishNameProperty))
+	if (json.TryGetProperty("englishName", out var enNameProp))
 	{
-		englishName = englishNameProperty.GetString();
+		englishName = enNameProp.GetString();
 	}
 	var subscribeCount = json.GetProperty("subscribeCount").GetInt32();
 	var todayFeedCount = json.GetProperty("todayFeedCount").GetInt32();
@@ -52,14 +52,21 @@ while (true)
 	var catPresent = json.GetProperty("catPresent").GetBoolean();
 	var lightsOn = json.GetProperty("lightTurnedOn").GetBoolean();
 	var tempC = json.GetProperty("deviceTemperatureCelsius").GetInt32();
-	var stockObj = json.GetProperty("stock");
+    #region stock
+    var stockObj = json.GetProperty("stock");
 	var kibblePercent = stockObj.GetProperty("kibble").GetString();
-	var hasSnacks = json.GetProperty("hasSnacks").GetBoolean();
-	var snackPercent = hasSnacks ? stockObj.GetProperty("snack").GetString() : "None";
+    var hasSnacks = json.GetProperty("hasSnacks").GetBoolean();
+    var snackPercent = hasSnacks
+		? stockObj.GetProperty("snack").GetString()
+		: "None";
+    #endregion
+	#region viewers
 	var viewersObj = json.GetProperty("viewers");
 	var localViewers = viewersObj.GetProperty("local").GetInt32();
-	var appViewers = viewersObj.GetProperty("app").GetInt32();
-	var totalViewers = localViewers + appViewers;
+	var jieMaoViewers = viewersObj.GetProperty("jiemao").GetInt32();
+	var purrViewers = viewersObj.GetProperty("purrrr").GetInt32();
+	var totalViewers = localViewers + jieMaoViewers + purrViewers;
+	#endregion
 	#endregion
 	Console.Clear();
 	Console.WriteLine(new string('█', Console.WindowWidth));
@@ -74,9 +81,10 @@ while (true)
 	Console.WriteLine("Stats for today:");
 	Console.WriteLine($"	 Feed count: {todayFeedCount}");
 	Console.WriteLine($"	Visit count: {todayShowCount}");
-	Console.WriteLine($"Views:");
-	Console.WriteLine($"    {appViewers} (JieMao)");
-	Console.WriteLine($"    {localViewers} (meow.camera)");
+	Console.WriteLine($"Viewers:");
+	Console.WriteLine($"    {jieMaoViewers} (JieMao)");
+    Console.WriteLine($"    {purrViewers} (Purr)");
+    Console.WriteLine($"    {localViewers} (meow.camera)");
 	Console.WriteLine($"{totalViewers} (total viewers)");
 	Console.WriteLine($"Temperature: {tempC}°C");
 	#endregion
